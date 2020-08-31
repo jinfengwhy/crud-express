@@ -1,5 +1,11 @@
+/**
+ * app.js 入口模块
+ * 职责：
+ *  创建服务
+ *  做一些服务相关配置
+ */
 var express = require('express')
-var fs = require('fs')
+var router = require('./router')
 
 var app = express()
 
@@ -9,16 +15,7 @@ app.use('/public/', express.static('./public/'))
 
 app.engine('html', require('express-art-template'))
 
-app.get('/', function (req, res) {
-    fs.readFile('./db.json', function(error, data) {
-        if (error) {
-            res.status(500).send('Server error.')
-        }
-        res.render('index.html', {
-            "students": JSON.parse(data.toString()).students
-        })
-    })
-})
+app.use(router)
 
 app.listen(3000, function () {
     console.log('app is running ...')
