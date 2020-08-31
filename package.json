@@ -1,0 +1,25 @@
+{
+  "name": "crud-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wjinfeng/crud-express.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wjinfeng/crud-express/issues"
+  },
+  "homepage": "https://github.com/wjinfeng/crud-express#readme",
+  "dependencies": {
+    "art-template": "^4.13.2",
+    "bootstrap": "^4.5.2",
+    "express": "^4.17.1",
+    "express-art-template": "^1.0.1"
+  }
+}
