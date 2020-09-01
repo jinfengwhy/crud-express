@@ -6,18 +6,19 @@
  */
 var fs = require('fs')
 var express = require('express')
+var Student = require('./student')
 
 // 1. 创建路由对象
 var router = express.Router()
 
 // 2. 把路由都挂载到 router 对象中
 router.get('/students', function (req, res) {
-    fs.readFile('./db.json', function(error, data) {
-        if (error) {
+    Student.find(function (err, students) {
+        if (err) {
             res.status(500).send('Server error.')
         }
         res.render('index.html', {
-            "students": JSON.parse(data.toString()).students
+            "students": students
         })
     })
 })
