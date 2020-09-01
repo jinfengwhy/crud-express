@@ -35,6 +35,7 @@
                   <th>gender</th>
                   <th>age</th>
                   <th>major</th>
+                  <th>操作</th>
                 </tr>
               </thead>
               <tbody>
@@ -45,6 +46,10 @@
                   <td>{{$value.gender}}</td>
                   <td>{{$value.age}}</td>
                   <td>{{$value.major}}</td>
+                  <td>
+                    <a href="/students/edit?id={{ $value.id }}">编辑</a>
+                    <a href="/students/delete?id={{ $value.id }}">删除</a>
+                  </td>
                 </tr>
                 {{ /each}}
               </tbody>

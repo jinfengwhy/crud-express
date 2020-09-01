@@ -30,22 +30,41 @@
  }
 
  /**
-  * 保存学生
+  * 根据 id 查找学生
+  * @param {Number} id 
+  * @param {Function} callback 
   */
- exports.save = function (student, callback) {
-    fs.readFile('./db.json', 'utf8', function (err, data) {
+ exports.findById = function (id, callback) {
+    fs.readFile(dbPath, 'utf8', function (err, data) {
         if (err) {
             return callback(err)
         }
-
         var students = JSON.parse(data).students
+
+        var ret = students.find(function (item) {
+            return item.id === id
+        })
+        return callback(null, ret)
+    })
+ }
+
+ /**
+  * 保存学生
+  */
+ exports.save = function (student, callback) {
+    fs.readFile(dbPath, 'utf8', function (err, data) {
+        if (err) {
+            return callback(err)
+        }
+        var students = JSON.parse(data).students
+
         student.id = students[students.length - 1].id + 1
         students.push(student)
         var fileData = JSON.stringify({
             "students": students
         })
 
-        fs.writeFile('./db.json', fileData, function (err) {
+        fs.writeFile(dbPath, fileData, function (err) {
             if (err) {
                 // 失败 传错误对象到上层（调用者）
                 return callback(err)
@@ -59,8 +78,35 @@
  /**
   * 更新学生
   */
- exports.update = function () {
+ exports.updateById = function (student, callback) {
+    fs.readFile(dbPath, 'utf8', function (err, data) {
+        if (err) {
+            return callback(err)
+        }
+        var students = JSON.parse(data).students
 
+        // EcmaScript 6 中的一个数组方法：find
+        // 需要接收一个函数作为参数
+        // 当某个遍历项符合 item.id === student.id 条件的时候，find 会终止遍历，同时返回遍历项
+        var stu = students.find(function (item) {
+            return item.id === student.id
+        })
+
+        // 遍历拷贝对象
+        for (var key in student) {
+            stu[key] = student[key]
+        }
+
+        var fileData = JSON.stringify({
+            'students': students
+        })
+        fs.writeFile(dbPath, fileData, function (err) {
+            if (err) {
+                callback(err)
+            }
+            callback(null)
+        })
+    })
  }
 
  /**
