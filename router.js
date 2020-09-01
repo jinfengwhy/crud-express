@@ -32,8 +32,13 @@ router.post('/students/new', function (req, res) {
     // 2. 处理
     //    将数据保存到 db.json 文件中用以持久化
     // 3. 返回结果      
-    console.log(req.body)
-    res.send('hello')
+    Student.save(req.body, function (err) {
+        if (err) {
+            return res.status(500).send('Server error.')
+        }
+        // 得异步操作结束之后，才能做重定向
+        res.redirect('/students')
+    })
 })
 
 router.get('/students/edit', function (req, res) {
