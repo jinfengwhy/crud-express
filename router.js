@@ -62,6 +62,12 @@ router.post('/students/edit', function (req, res) {
 })
 
 router.get('/students/delete', function (req, res) {
+    Student.deleteById(parseInt(req.query.id), function (err) {
+        if (err) {
+            return res.status(500).send('Server error.')
+        }
+        res.redirect('/students')
+    })
 })
 
 // 3. 把 router 导出

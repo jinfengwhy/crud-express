@@ -111,9 +111,34 @@
     })
  }
 
- /**
-  * 删除学生
-  */
- exports.delete = function () {
+/**
+ * 删除学生
+ * @param {Number} id 
+ * @param {Function} callback 
+ */
+ exports.deleteById = function (id, callback) {
+    fs.readFile(dbPath, 'utf8', function (err, data) {
+        if (err) {
+            callback(err)
+        }
+        var students = JSON.parse(data).students
 
+        // findIndex 方法专门用来根据条件查找元素的下标
+        var deleteId = students.findIndex(function (item) {
+            return item.id === id
+        })
+
+        // 第一个参数是删除的起始下标 第二个参数是要删除的数量
+        students.splice(deleteId, 1)
+
+        var fileData = JSON.stringify({
+            students: students
+        })
+        fs.writeFile(dbPath, fileData, function (err) {
+            if (err) {
+                callback(err)
+            }
+            callback(null)
+        })
+    })
  }
