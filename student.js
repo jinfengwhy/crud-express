@@ -85,6 +85,8 @@
         }
         var students = JSON.parse(data).students
 
+        student.id = parseInt(student.id)
+
         // EcmaScript 6 中的一个数组方法：find
         // 需要接收一个函数作为参数
         // 当某个遍历项符合 item.id === student.id 条件的时候，find 会终止遍历，同时返回遍历项
