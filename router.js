@@ -6,7 +6,7 @@
  */
 var fs = require('fs')
 var express = require('express')
-var Student = require('./student')
+var Student = require('./student-mongoose.js')
 
 // 1. 创建路由对象
 var router = express.Router()
@@ -32,7 +32,7 @@ router.post('/students/new', function (req, res) {
     // 2. 处理
     //    将数据保存到 db.json 文件中用以持久化
     // 3. 返回结果      
-    Student.save(req.body, function (err) {
+    new Student(req.body).save(function (err) {
         if (err) {
             return res.status(500).send('Server error.')
         }
@@ -42,7 +42,7 @@ router.post('/students/new', function (req, res) {
 })
 
 router.get('/students/edit', function (req, res) {
-    Student.findById(parseInt(req.query.id), function (err, student) {
+    Student.findById(req.query.id, function (err, student) {
         if (err) {
             return res.status(500).send('Server error.')
         }
@@ -53,7 +53,7 @@ router.get('/students/edit', function (req, res) {
 })
 
 router.post('/students/edit', function (req, res) {
-    Student.updateById(req.body, function(err) {
+    Student.findByIdAndUpdate(req.body.id, req.body, function(err) {
         if (err) {
             return res.status(500).send('Server error.')
         }
@@ -62,7 +62,7 @@ router.post('/students/edit', function (req, res) {
 })
 
 router.get('/students/delete', function (req, res) {
-    Student.deleteById(parseInt(req.query.id), function (err) {
+    Student.findByIdAndRemove(req.query.id, function (err) {
         if (err) {
             return res.status(500).send('Server error.')
         }
