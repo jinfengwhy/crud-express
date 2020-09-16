@@ -1,8 +1,32 @@
-## 基于 node.js 的 express 框架
+# CRUD-EXPRESS
 
+## 项目介绍
+
+* 基于 node.js 的 express 框架
 * 做学生管理系统的增删改查
-* 首页：http://127.0.0.1:3000/students
+* 使用 mongoDB 来做数据持久化存储
 
+## 项目启动
+
+1. 安装依赖
+```shell
+npm install
+```
+
+2. 启动 mongod 服务
+```shell
+mongod
+```
+
+3. 执行入口文件 app.js
+```shell
+node app.js
+```
+
+4. 访问项目首页
+* http://127.0.0.1:3000/students
+
+## 项目文档
 
 ### 路由设计
 
